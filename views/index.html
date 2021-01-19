@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Metric/Imperial Tracker</title>
+</head>
+
+<body>
+    <h1>Metric/Imperial Tracker</h1>
+    <hr>
+    <section class="api">
+        <strong>Example Usage</strong>
+        <br>
+        <code>/api/convert?input=4gal</code>
+        <br><code>/api/convert?input=1/2km</code>
+        <br><code>/api/convert?input=5.4/3lbs</code>
+        <br><code>/api/convert?input=kg</code>
+        <br>
+    </section>
+    <hr>
+    <section class="frontend">
+        <strong>FrontEnd Example</strong>
+        <br><br>
+        <form id="convertForm">
+            <input type="text" name="input" placeholder="3.1mi">
+            <input type="submit" value="Submit">
+        </form>
+        <p class="result"></p>
+        <code class="jsonResult"></code>
+    </section>
+    <script src="https://code.jquery.com/jquery-2.2.1.min.js"></script>
+    <script>
+        $(function () {
+            $("#convertForm").submit(function (event) {
+                event.preventDefault();
+                // alert($("#convertForm").serialize().substring(6))
+                $.ajax({
+                    url: "/api/convert",
+                    type: "get",
+                    data: $("#convertForm").serialize(),
+                    success: function (data) {
+                        $(".result").text(data.string || data)
+                        $(".jsonResult").text(JSON.stringify(data))
+                    }
+                })
+            })
+        })
+    </script>
+</body>
+
+</html>
